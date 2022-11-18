@@ -4,13 +4,22 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
+@using (Html.BeginForm("Index","Musteri",FormMethod.Get))
+            {
+                <p>Aranacak Müşteri Adı : @Html.TextBox("p")
+    <input type="submit" value="Ara"/>
+           </p>
+            }
 
 <table class="table table-bordered">
     <tr>
         <th>MÜŞTERİ ID</th>
         <th>MÜŞTERİ ADI</th>
         <th>MÜŞTERİ SOYADI</th>
-       
+        <th>SİL</th>
+        <th>GÜNCELLE</th>
+        <th>ALERT</th>
+
     </tr>
     <tbody>
         @foreach (var mus in Model)
@@ -19,6 +28,9 @@
                 <th>@mus.MUSTERIID</th>
                 <td>@mus.MUSTERIAD</td>
                 <td>@mus.MUSTERISOYAD</td>
+                <td><a href="/Musteri/SIL/@mus.MUSTERIID" class="btn btn-danger">SİL</a></td>
+                <td><a href="/Musteri/MusteriGetir/@mus.MUSTERIID" class="btn btn-success">GÜNCELLE</a></td>
+                <td>@Html.ActionLink("SİL", "SIL", new { id=mus.MUSTERIID }, new { @class = "btn btn-warning", onclick = "return confirm('Gerçekten Silmek İstiyor Musunuz?')" })</td>
             </tr>
         }
     </tbody>

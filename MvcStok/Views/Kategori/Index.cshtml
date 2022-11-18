@@ -1,28 +1,40 @@
 ﻿@using MvcStok.Models.Entity
-@model List<TBLKATEGORILER>
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<TBLKATEGORILER>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-<table class="table table-bordered">
-    <tr>
-        <th>KATEGORİ ID</th>
-        <th>KATEGORİ ADI</th>
-        <th>SİL</th>
-        <th>GÜNCELLE</th>
-    </tr>
+<table id="tbl1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>KATEGORİ ID</th>
+            <th>KATEGORİ ADI</th>
+            <th>SİL</th>
+            <th>GÜNCELLE</th>
+        </tr>
+    </thead>
     <tbody>
         @foreach (var ktgr in Model)
         {
             <tr>
                 <th>@ktgr.KATEGORIID</th>
                 <td>@ktgr.KATEGORIAD</td>
-                <td><a href="/KATEGORİ/SIL/@ktgr.KATEGORIID" class="btn btn-danger">SİL</a></td>
-                <td><a href="/KATEGORİ/GUNCELLE/@ktgr.KATEGORIID" class="btn btn-success">GÜNCELLE</a></td>
+                <td><a href="/KATEGORI/SIL/@ktgr.KATEGORIID" class="btn btn-danger">SİL</a></td>
+                <td><a href="/KATEGORI/KategoriGetir/@ktgr.KATEGORIID" class="btn btn-success">GÜNCELLE</a></td>
             </tr>
         }
     </tbody>
 </table>
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }))
 <a href="/KATEGORI/YeniKategori/" class="btn btn-primary">YENİ KATEGORİ EKLE</a>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.13.1/i18n/tr.json"></script>
+<link href="~/Content/DataTables/css/jquery.dataTables.css" rel="stylesheet" />
+<script>
+    $('#tbl1').DataTable();
+</script>
 
